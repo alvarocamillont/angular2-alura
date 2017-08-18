@@ -12,3 +12,12 @@ client/app/**/*.js
 client/app/**/*.map
 client/npm-debug.log
 server/npm-debug.log
+alurapic/client/.vscode
+alurapic/server/.vscode
+alurapic/server/node_modules
+alurapic/client/node_modules
+alurapic/client/typings
+alurapic/client/app/**/*.js
+alurapic/client/app/**/*.map
+alurapic/client/npm-debug.log
+alurapic/server/npm-debug.log
