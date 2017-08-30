@@ -7,6 +7,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     styleUrls: ['./foto.component.css'] ,
     encapsulation: ViewEncapsulation.Emulated
 })
+
 export class FotoComponent {
 
     @Input() titulo: string = '';
