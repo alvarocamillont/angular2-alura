@@ -1,20 +1,34 @@
-import { Component, Input } from '@angular/core';
-import { FotoComponent } from '../foto/foto.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FotoService } from '../foto/foto.service';
-import { ActivatedRoute,Router  } from '@angular/router';
+import {
+    Component,
+    Input
+} from '@angular/core';
+import {
+    FotoComponent
+} from '../foto/foto.component';
+import {
+    FormGroup,
+    FormBuilder,
+    Validators
+} from '@angular/forms';
+import {
+    FotoService
+} from '../foto/foto.service';
+import {
+    ActivatedRoute,
+    Router
+} from '@angular/router';
 
 @Component({
     moduleId: module.id,
     selector: 'cadastro',
-    templateUrl: './cadastro.component.html' 
+    templateUrl: './cadastro.component.html'
 })
-export class CadastroComponent { 
+export class CadastroComponent {
 
     foto: FotoComponent = new FotoComponent();
     service: FotoService;
     meuForm: FormGroup;
-    route: ActivatedRoute; 
+    route: ActivatedRoute;
     mensagem: string = '';
     router: Router;
 
@@ -25,16 +39,16 @@ export class CadastroComponent {
         this.router = router;
 
         this.route.params.subscribe(params => {
-            
-        let id = params['id'];
 
-        if(id) {
+            let id = params['id'];
 
-            this.service.buscaPorId(id)
-                .subscribe(
-                    foto => this.foto = foto,
-                    erro => console.log(erro));    
-            }            
+            if (id) {
+
+                this.service.buscaPorId(id)
+                    .subscribe(
+                        foto => this.foto = foto,
+                        erro => console.log(erro));
+            }
         });
 
         this.meuForm = fb.group({
@@ -47,16 +61,19 @@ export class CadastroComponent {
     }
 
     cadastrar(event) {
+
         event.preventDefault();
         console.log(this.foto);
 
-        this.service.cadastra(this.foto)
-            .subscribe(() => {
+        this.service
+            .cadastra(this.foto)
+            .subscribe(res => {
+                this.mensagem = res.obterMensagem();
                 this.foto = new FotoComponent();
-                console.log('Foto salva com sucesso');
-                this.router.navigate(['']);
+                if (!res.ehInclusao()) this.router.navigate(['']);
             }, erro => {
                 console.log(erro);
+                this.mensagem = 'Não foi possível savar a foto';
             });
     }
 }
